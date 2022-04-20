@@ -74,7 +74,7 @@ def remove(
     session: Optional[ort.InferenceSession] = None,
     only_mask: bool = False,
 ) -> Union[bytes, PILImage, np.ndarray]:
-
+    """isinstance()判断data是什么类型，并进行数据的读取"""
     if isinstance(data, PILImage):
         return_type = ReturnType.PILLOW
         img = data

@@ -23,7 +23,7 @@ def ort_session(model_name: str) -> ort.InferenceSession:
         url = "https://drive.google.com/uc?id=1ZfqwVxu-1XWC1xU1GHIP-FM_Knd_AX5j"
     else:
         assert AssertionError("Choose between u2net, u2netp or u2net_human_seg")
-
+    #获取环境变量键为"U2NET_HOME"的值，如果没有则返回"~/.u2net
     home = os.getenv("U2NET_HOME", os.path.join("~", ".u2net"))
     path = Path(home).expanduser() / f"{model_name}.onnx"
     path.parents[0].mkdir(parents=True, exist_ok=True)

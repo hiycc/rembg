@@ -27,12 +27,15 @@ def ort_session(model_name: str) -> ort.InferenceSession:
     home = os.getenv("U2NET_HOME", os.path.join("~", ".u2net"))
     path = Path(home).expanduser() / f"{model_name}.onnx"
     path.parents[0].mkdir(parents=True, exist_ok=True)
-
+    #得到预设模型目录
+    #如果模型不存在则下载
     if not path.exists():
         with redirect_stdout(sys.stderr):
+            #gdown：下载google drive文件的库
             gdown.download(url, str(path), use_cookies=False)
     else:
         hashing = hashlib.new("md5", path.read_bytes(), usedforsecurity=False)
+        #验证失败
         if hashing.hexdigest() != md5:
             with redirect_stdout(sys.stderr):
                 gdown.download(url, str(path), use_cookies=False)
